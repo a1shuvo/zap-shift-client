@@ -31,7 +31,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="p-16">
+    <section className="p-4 md:p-16">
       <div className="max-w-7xl mx-auto mb-8">
         <h2 className="text-3xl font-extrabold text-primary-content">How it Works</h2>
       </div>

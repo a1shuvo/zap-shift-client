@@ -49,7 +49,7 @@ const Services = () => {
   ];
 
   return (
-    <section className="bg-primary-content p-16 rounded-3xl mb-8">
+    <section className="bg-primary-content p-4 md:p-16 rounded-3xl mb-8">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-white text-center mb-4">
           Our Services
