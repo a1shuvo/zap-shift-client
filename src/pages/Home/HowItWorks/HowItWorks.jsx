@@ -43,7 +43,7 @@ const HowItWorks = () => {
           >
             <div className="mb-4">{card.icon}</div>
             <h3 className="font-bold mb-2 text-primary-content">{card.title}</h3>
-            <p className="font-medium text-sm text-gray-600">
+            <p className="font-medium text-gray-600">
               {card.description}
             </p>
           </div>

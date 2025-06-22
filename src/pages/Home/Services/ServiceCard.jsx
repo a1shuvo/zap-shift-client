@@ -10,9 +10,7 @@ const ServiceCard = ({ service }) => {
       <h3 className="font-bold text-xl text-center text-primary-content mb-2">
         {title}
       </h3>
-      <p className="font-medium text-sm text-gray-600 text-center">
-        {description}
-      </p>
+      <p className="font-medium text-gray-600 text-center">{description}</p>
     </div>
   );
 };
