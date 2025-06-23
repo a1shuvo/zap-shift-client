@@ -1,4 +1,5 @@
 import Banner from "../Banner/Banner";
+import BecomeMerchant from "../BecomeMerchant/BecomeMerchant";
 import BrandSlider from "../BrandSlider/BrandSlider";
 import Features from "../Features/Features";
 import HowItWorks from "../HowItWorks/HowItWorks";
@@ -12,6 +13,7 @@ const Home = () => {
       <Services></Services>
       <BrandSlider></BrandSlider>
       <Features></Features>
+      <BecomeMerchant></BecomeMerchant>
     </div>
   );
 };

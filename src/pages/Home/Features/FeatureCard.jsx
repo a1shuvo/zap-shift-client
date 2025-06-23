@@ -1,7 +1,7 @@
 const FeatureCard = ({ feature }) => {
   const { image, title, description } = feature;
   return (
-    <div className="bg-base-100 rounded-2xl p-8 flex flex-col md:flex-row items-center mb-8">
+    <div className="bg-base-100 rounded-2xl p-8 flex flex-col md:flex-row items-center mb-6">
       {/* Left Image */}
       <div className="w-full md:w-1/3 flex justify-center mb-6 md:mb-0">
         <img src={image} alt={title} className="w-50 h-50 object-contain" />
