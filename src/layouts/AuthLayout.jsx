@@ -10,10 +10,10 @@ const AuthLayout = () => {
           <img className="py-16 w-fit h-fit" src={authImage} alt="Auth Image" />
         </div>
         <div className="flex-1">
-          <div className="pt-8">
+          <div className="pt-4">
             <ProFastLogo></ProFastLogo>
           </div>
-          <div className="py-8 px-4 md:px-16 lg:px-32 ">
+          <div className="py-4 px-4 md:px-16 lg:px-32 ">
             <Outlet></Outlet>
           </div>
         </div>

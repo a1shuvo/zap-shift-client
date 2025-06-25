@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
   const {
@@ -64,9 +66,19 @@ const Register = () => {
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
-            <button className="btn btn-neutral mt-4">Register</button>
+            <button className="btn btn-primary mt-4">Register</button>
           </fieldset>
         </form>
+        <p className="text-sm">
+          Already have an account?{" "}
+          <Link
+            className="btn-link text-lime-600 font-light no-underline"
+            to={"/login"}
+          >
+            Login
+          </Link>
+        </p>
+        <SocialLogin></SocialLogin>
       </div>
     </div>
   );
