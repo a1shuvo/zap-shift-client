@@ -8,6 +8,9 @@ const Navbar = () => {
         <Link to={"/"}>Home</Link>
       </li>
       <li>
+        <Link to={"/coverage"}>Coverage</Link>
+      </li>
+      <li>
         <Link to={"/about"}>About</Link>
       </li>
     </>
@@ -41,9 +44,7 @@ const Navbar = () => {
               {navItems}
             </ul>
           </div>
-          <Link to={"/"}>
-            <ProFastLogo></ProFastLogo>
-          </Link>
+          <ProFastLogo></ProFastLogo>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
