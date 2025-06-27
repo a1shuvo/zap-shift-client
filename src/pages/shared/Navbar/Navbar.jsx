@@ -8,6 +8,9 @@ const Navbar = () => {
         <Link to={"/"}>Home</Link>
       </li>
       <li>
+        <Link to={"/sendParcel"}>Send Parcel</Link>
+      </li>
+      <li>
         <Link to={"/coverage"}>Coverage</Link>
       </li>
       <li>
@@ -50,7 +53,9 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <Link to={"/login"} className="btn btn-primary">
+            Login
+          </Link>
         </div>
       </div>
     </div>
