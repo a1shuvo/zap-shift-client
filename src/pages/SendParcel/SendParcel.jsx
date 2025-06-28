@@ -3,17 +3,19 @@ import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const generateTrackingID = () => {
   const date = new Date();
   const datePart = date.toISOString().split("T")[0].replace(/-/g, "");
-  const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+  const rand = Math.random().toString(36).substring(2, 9).toUpperCase();
   return `PCL-${datePart}-${rand}`;
 };
 
 const SendParcel = () => {
   const warehouses = useLoaderData();
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -125,7 +127,7 @@ const SendParcel = () => {
       confirmButtonColor: "#16a34a",
       denyButtonColor: "#d3d3d3",
       customClass: {
-        popup: "rounded-xl shadow-md px-6 py-6",
+        popup: "rounded-xl shadow-md p-4",
       },
     });
 
@@ -142,17 +144,18 @@ const SendParcel = () => {
 
       console.log("Confirmed Parcel:", parcelData);
 
-      // axiosSecure.post("/parcels", parcelData).then((res) => {
-      //   if (res.data.insertedId) {
-      //     Swal.fire({
-      //       title: "Redirecting...",
-      //       text: "Proceeding to payment gateway.",
-      //       icon: "success",
-      //       timer: 1500,
-      //       showConfirmButton: false,
-      //     });
-      //   }
-      // });
+      axiosSecure.post("/parcels", parcelData).then((res) => {
+        if (res.data.insertedId) {
+          // TODO: Redirect to payment page
+          Swal.fire({
+            title: "Redirecting...",
+            text: "Proceeding to payment gateway.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        }
+      });
     }
 
     setLoading(false);
