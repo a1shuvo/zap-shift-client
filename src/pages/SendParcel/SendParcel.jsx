@@ -4,10 +4,15 @@ import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
+const generateTrackingID = () => {
+  const date = new Date();
+  const datePart = date.toISOString().split("T")[0].replace(/-/g, "");
+  const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+  return `PCL-${datePart}-${rand}`;
+};
+
 const SendParcel = () => {
   const warehouses = useLoaderData();
-
-  // Simulated logged-in user (replace with AuthContext later)
   const { user } = useAuth();
 
   const {
@@ -34,62 +39,120 @@ const SendParcel = () => {
   };
 
   const calculateCost = () => {
-    let cost = 0;
+    let baseCost = 0;
+    let extraCost = 0;
     let breakdown = "";
+    let parcelType = type;
+    let deliveryZone = isSameCity ? "Within Same District" : "Outside District";
 
     if (type === "document") {
-      cost = isSameCity ? 60 : 80;
-      breakdown = `Document Parcel\nBase Rate: ৳${cost}`;
+      baseCost = isSameCity ? 60 : 80;
+      breakdown = `Document delivery ${
+        isSameCity ? "within" : "outside"
+      } the district.`;
     } else if (type === "non-document") {
       if (parsedWeight <= 3) {
-        cost = isSameCity ? 110 : 150;
-        breakdown = `Non-Document ≤3kg\nBase Rate: ৳${cost}`;
+        baseCost = isSameCity ? 110 : 150;
+        breakdown = `Non-document up to 3kg ${
+          isSameCity ? "within" : "outside"
+        } the district.`;
       } else {
         const extraKg = parsedWeight - 3;
-        const extraCost = extraKg * 40;
-        cost = (isSameCity ? 110 : 150) + extraCost + (!isSameCity ? 40 : 0);
-        breakdown = `Non-Document >3kg\nBase: ৳${
-          isSameCity ? 110 : 150
-        } + ৳40/kg x ${extraKg}${
-          !isSameCity ? " + ৳40 (Outside)" : ""
-        }\nTotal: ৳${cost}`;
+        const perKgCharge = extraKg * 40;
+        const districtExtra = isSameCity ? 0 : 40;
+        baseCost = isSameCity ? 110 : 150;
+        extraCost = perKgCharge + districtExtra;
+
+        breakdown = `
+        Non-document over 3kg ${
+          isSameCity ? "within" : "outside"
+        } the district.<br/>
+        Extra charge: ৳40 x ${extraKg.toFixed(1)}kg = ৳${perKgCharge}<br/>
+        ${districtExtra ? "+ ৳40 extra for outside district delivery" : ""}
+      `;
       }
     }
 
-    return { cost, breakdown };
+    const totalCost = baseCost + extraCost;
+
+    return {
+      parcelType,
+      weight: parsedWeight,
+      deliveryZone,
+      baseCost,
+      extraCost,
+      totalCost,
+      breakdown,
+    };
   };
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const { cost, breakdown } = calculateCost();
+
+    const {
+      parcelType,
+      weight,
+      deliveryZone,
+      baseCost,
+      extraCost,
+      totalCost,
+      breakdown,
+    } = calculateCost();
 
     const result = await Swal.fire({
-      title: `Estimated Cost: ৳${cost}`,
-      html: `<pre style="text-align:left;font-size:14px;">${breakdown}</pre>`,
-      showDenyButton: true,
-      confirmButtonText: "Confirm Delivery",
-      confirmTextColor: "#000",
-      denyButtonText: "Continue Editing",
-      confirmButtonColor: "#B7D55C",
+      title: "📦 Delivery Cost Breakdown",
       icon: "info",
+      html: `
+      <div class="text-left text-base space-y-2">
+        <p><strong>Parcel Type:</strong> ${parcelType}</p>
+        <p><strong>Weight:</strong> ${weight} kg</p>
+        <p><strong>Delivery Zone:</strong> ${deliveryZone}</p>
+        <hr class="my-2"/>
+        <p><strong>Base Cost:</strong> ৳${baseCost}</p>
+        ${
+          extraCost > 0
+            ? `<p><strong>Extra Charges:</strong> ৳${extraCost}</p>`
+            : ""
+        }
+        <div class="text-gray-500 text-sm">${breakdown}</div>
+        <hr class="my-2"/>
+        <p class="text-xl font-bold text-green-600">Total Cost: ৳${totalCost}</p>
+      </div>
+    `,
+      showDenyButton: true,
+      confirmButtonText: "💳 Proceed to Payment",
+      denyButtonText: "✏️ Continue Editing",
+      confirmButtonColor: "#16a34a",
+      denyButtonColor: "#d3d3d3",
+      customClass: {
+        popup: "rounded-xl shadow-md px-6 py-6",
+      },
     });
 
     if (result.isConfirmed) {
       const parcelData = {
         ...data,
+        deliveryCost: totalCost,
+        created_by: user.email,
+        payment_status: "unpaid",
+        delivery_status: "not_collected",
         creation_date: new Date().toISOString(),
-        deliveryCost: cost,
+        tracking_id: generateTrackingID(),
       };
 
-      // TODO: Send to backend
       console.log("Confirmed Parcel:", parcelData);
 
-      Swal.fire({
-        icon: "success",
-        title: "Your parcel has been booked!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // axiosSecure.post("/parcels", parcelData).then((res) => {
+      //   if (res.data.insertedId) {
+      //     Swal.fire({
+      //       title: "Redirecting...",
+      //       text: "Proceeding to payment gateway.",
+      //       icon: "success",
+      //       timer: 1500,
+      //       showConfirmButton: false,
+      //     });
+      //   }
+      // });
     }
 
     setLoading(false);
@@ -136,7 +199,7 @@ const SendParcel = () => {
               <label className="label">Parcel Name</label>
               <input
                 {...register("title", { required: "Parcel name is required" })}
-                placeholder="Parcel Name"
+                placeholder="Describe your parcel"
                 className="input input-bordered w-full"
               />
               {errors.title && (
@@ -167,8 +230,16 @@ const SendParcel = () => {
 
         {/* === Real-time Delivery Cost Preview === */}
         {type && senderRegion && receiverRegion && (
-          <div className="bg-lime-100 text-primary-content px-4 py-2 rounded text-sm">
-            💰 Estimated Cost: <strong>৳{calculateCost().cost}</strong>
+          <div className="bg-lime-50 border border-lime-300 text-lime-900 px-5 py-3 rounded-md shadow-sm text-sm mt-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">💰</span>
+              <span>
+                <span className="font-medium">Estimated Delivery Cost:</span>{" "}
+                <span className="font-bold text-green-600">
+                  ৳{calculateCost().totalCost}
+                </span>
+              </span>
+            </div>
           </div>
         )}
 
