@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaCreditCard, FaEye, FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -20,6 +21,7 @@ const formatDateTime = (isoDate) => {
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
@@ -36,9 +38,9 @@ const MyParcels = () => {
   };
 
   // 🔹 Action: Pay for Parcel
-  const handlePay = (parcel) => {
-    console.log("Paying for Parcel:", parcel);
-    // Payment logic here
+  const handlePay = (id) => {
+    console.log("Paying for Parcel:", id);
+    navigate(`/dashboard/payment/${id}`);
   };
 
   // 🔹 Action: Delete Parcel
@@ -157,7 +159,7 @@ const MyParcels = () => {
                   </button>
                   {parcel.payment_status === "unpaid" && (
                     <button
-                      onClick={() => handlePay(parcel)}
+                      onClick={() => handlePay(parcel._id)}
                       className="btn btn-xs btn-outline btn-success"
                     >
                       <FaCreditCard />
