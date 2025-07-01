@@ -6,10 +6,10 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import Coverage from "../pages/Coverage/Coverage";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import Payment from "../pages/Dashboard/Payment/Payment";
 import Home from "../pages/Home/Home/Home";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import PrivateRoute from "../routes/PrivateRoute";
-import Payment from "../pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -63,9 +63,9 @@ export const router = createBrowserRouter([
         Component: MyParcels,
       },
       {
-        path: "payment/:id",
-        Component: Payment
-      }
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
     ],
   },
 ]);
