@@ -7,6 +7,7 @@ import Register from "../pages/Auth/Register/Register";
 import Coverage from "../pages/Coverage/Coverage";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Home from "../pages/Home/Home/Home";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import PrivateRoute from "../routes/PrivateRoute";
@@ -21,12 +22,12 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/coverage",
+        path: "coverage",
         Component: Coverage,
         loader: () => fetch("./warehouses.json"),
       },
       {
-        path: "/sendParcel",
+        path: "sendParcel",
         element: (
           <PrivateRoute>
             <SendParcel></SendParcel>
@@ -41,17 +42,17 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       {
-        path: "/login",
+        path: "login",
         Component: Login,
       },
       {
-        path: "/register",
+        path: "register",
         Component: Register,
       },
     ],
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     element: (
       <PrivateRoute>
         <DashboardLayout></DashboardLayout>
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: "payment/:parcelId",
         Component: Payment,
+      },
+      {
+        path: "paymentHistory",
+        Component: PaymentHistory,
       },
     ],
   },
