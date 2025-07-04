@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdPayment } from "react-icons/md";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loader from "../../shared/Loader/Loader";
 
 const PaymentHistory = () => {
   const { user } = useAuth();
@@ -16,7 +17,7 @@ const PaymentHistory = () => {
   });
 
   if (isPending) {
-    return "Loading...";
+    return <Loader></Loader>;
   }
 
   if (payments.length === 0) {
@@ -29,7 +30,7 @@ const PaymentHistory = () => {
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg shadow border border-base-200">
+    <div className="overflow-x-auto">
       <table className="table table-zebra w-full">
         <thead className="bg-base-200 text-base-content">
           <tr>

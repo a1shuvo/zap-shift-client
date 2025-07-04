@@ -98,16 +98,14 @@ const MyParcels = () => {
   };
 
   return (
-    <div className="overflow-x-auto p-4 w-full">
-      <h2 className="text-xl font-semibold mb-4 text-center">Parcel List</h2>
-
+    <div className="overflow-x-auto w-full">
       {parcels.length === 0 ? (
         <div className="text-center text-lg text-gray-500 py-10">
           <p>No parcels found.</p>
         </div>
       ) : (
         <table className="table table-zebra w-full">
-          <thead className="bg-base-200 text-sm">
+          <thead className="bg-base-200 text-base-content">
             <tr>
               <th>#</th>
               <th>Type</th>

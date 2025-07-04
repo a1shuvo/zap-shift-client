@@ -1,10 +1,5 @@
 import { HiOutlineHome } from "react-icons/hi2";
-import {
-  LuCreditCard,
-  LuPackage,
-  LuMapPin,
-  LuUserCog,
-} from "react-icons/lu";
+import { LuCreditCard, LuMapPin, LuPackage, LuUserCog } from "react-icons/lu";
 import { NavLink, Outlet } from "react-router";
 import ProFastLogo from "../pages/shared/ProFastLogo/ProFastLogo";
 
@@ -61,7 +56,7 @@ const DashboardLayout = () => {
             <ProFastLogo></ProFastLogo>
           </div>
           <li>
-            <NavLink to="/">
+            <NavLink to="/dashboard">
               <HiOutlineHome className="inline mr-2" />
               Home
             </NavLink>

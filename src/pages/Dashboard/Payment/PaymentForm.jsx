@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loader from "../../shared/Loader/Loader";
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -25,7 +26,7 @@ const PaymentForm = () => {
   });
 
   if (isPending) {
-    return "Loading...";
+    return <Loader></Loader>;
   }
   const amount = parcelInfo.deliveryCost;
   const amountInCents = amount * 100;

@@ -4,12 +4,14 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import RootLayout from "../layouts/RootLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import BeRider from "../pages/BeRider/BeRider";
 import Coverage from "../pages/Coverage/Coverage";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Home from "../pages/Home/Home/Home";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import Loader from "../pages/shared/Loader/Loader";
 import PrivateRoute from "../routes/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -27,6 +29,16 @@ export const router = createBrowserRouter([
         loader: () => fetch("./warehouses.json"),
       },
       {
+        path: "beRider",
+        element: (
+          <PrivateRoute>
+            <BeRider></BeRider>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("./warehouses.json"),
+        HydrateFallback: Loader,
+      },
+      {
         path: "sendParcel",
         element: (
           <PrivateRoute>
@@ -34,6 +46,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: () => fetch("./warehouses.json"),
+        HydrateFallback: Loader,
       },
     ],
   },

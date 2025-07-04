@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import ProFastLogo from "../ProFastLogo/ProFastLogo";
 
@@ -14,23 +14,26 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <Link to={"/"}>Home</Link>
+        <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <Link to={"/sendParcel"}>Send Parcel</Link>
+        <NavLink to={"/sendParcel"}>Send Parcel</NavLink>
       </li>
       {user && (
         <>
           <li>
-            <Link to={"/dashboard"}>Dashboard</Link>
+            <NavLink to={"/dashboard"}>Dashboard</NavLink>
           </li>
         </>
       )}
       <li>
-        <Link to={"/coverage"}>Coverage</Link>
+        <NavLink to={"/coverage"}>Coverage</NavLink>
       </li>
       <li>
-        <Link to={"/about"}>About</Link>
+        <NavLink to={"/about"}>About</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/beRider"}>Be a Rider</NavLink>
       </li>
     </>
   );
