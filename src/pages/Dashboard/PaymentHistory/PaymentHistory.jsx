@@ -18,7 +18,6 @@ const PaymentHistory = () => {
   if (isPending) {
     return "Loading...";
   }
-  console.log(payments);
 
   if (payments.length === 0) {
     return (
