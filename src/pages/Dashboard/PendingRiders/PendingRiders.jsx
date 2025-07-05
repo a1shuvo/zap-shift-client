@@ -17,15 +17,15 @@ const PendingRiders = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: async ({ id, status }) => {
-      return axiosSecure.patch(`/riders/${id}`, { status });
+    mutationFn: async ({ id, status, email }) => {
+      return axiosSecure.patch(`/riders/${id}`, { status, email });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["pendingRiders"]);
     },
   });
 
-  const handleAction = async (id, status) => {
+  const handleAction = async (id, status, email) => {
     const confirm = await Swal.fire({
       title: `Are you sure to ${status} this rider?`,
       icon: "question",
@@ -35,7 +35,7 @@ const PendingRiders = () => {
     });
 
     if (confirm.isConfirmed) {
-      mutation.mutate({ id, status });
+      mutation.mutate({ id, status, email });
       Swal.fire({
         icon: "success",
         title: `Rider ${status === "accepted" ? "accepted" : "rejected"}`,
@@ -85,13 +85,17 @@ const PendingRiders = () => {
                     </button>
                     <button
                       className="btn btn-xs btn-success"
-                      onClick={() => handleAction(rider._id, "accepted")}
+                      onClick={() =>
+                        handleAction(rider._id, "accepted", rider.email)
+                      }
                     >
                       Accept
                     </button>
                     <button
                       className="btn btn-xs btn-error"
-                      onClick={() => handleAction(rider._id, "rejected")}
+                      onClick={() =>
+                        handleAction(rider._id, "rejected", rider.email)
+                      }
                     >
                       Reject
                     </button>

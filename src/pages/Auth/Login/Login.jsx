@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import useAxios from "../../../hooks/useAxios";
 import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
@@ -13,16 +14,24 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosInstance = useAxios();
   const from = location.state?.from || "/";
 
-  const onSubmit = (data) => {
-    signIn(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
-        navigate(from);
-      })
-      .catch((error) => console.error(error));
+  const onSubmit = async (data) => {
+    try {
+      const result = await signIn(data.email, data.password);
+      const userInfo = {
+        email: result?.user?.email,
+        last_log_in: new Date().toISOString(),
+      };
+      const res = await axiosInstance.post("/users", userInfo);
+      console.log(res.data);
+      navigate(from);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
+
   return (
     <div className="card bg-base-100 w-full">
       <div className="card-body">
@@ -66,6 +75,7 @@ const Login = () => {
           <Link
             className="btn-link text-lime-600 font-light no-underline"
             to={"/register"}
+            state={{ from }}
           >
             Register
           </Link>

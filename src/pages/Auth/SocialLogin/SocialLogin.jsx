@@ -12,7 +12,6 @@ const SocialLogin = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then(async (result) => {
-        console.log(result.user);
         // save user data in the db
         const userInfo = {
           email: result?.user?.email,
