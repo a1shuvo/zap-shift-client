@@ -1,5 +1,12 @@
 import { HiOutlineHome } from "react-icons/hi2";
-import { LuCreditCard, LuMapPin, LuPackage, LuUserCog } from "react-icons/lu";
+import {
+  LuBike,
+  LuClock,
+  LuCreditCard,
+  LuMapPin,
+  LuPackage,
+  LuUserCog,
+} from "react-icons/lu";
 import { NavLink, Outlet } from "react-router";
 import ProFastLogo from "../pages/shared/ProFastLogo/ProFastLogo";
 
@@ -83,6 +90,18 @@ const DashboardLayout = () => {
             <NavLink to="/dashboard/profile">
               <LuUserCog className="inline mr-2" />
               Update Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/activeRiders">
+              <LuBike className="inline mr-2" />
+              Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/pendingRiders">
+              <LuClock className="inline mr-2" />
+              Pending Riders
             </NavLink>
           </li>
           {/* ✕ Close button (only on small devices) */}

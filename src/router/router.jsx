@@ -9,6 +9,7 @@ import Coverage from "../pages/Coverage/Coverage";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import Home from "../pages/Home/Home/Home";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import Loader from "../pages/shared/Loader/Loader";
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: "paymentHistory",
         Component: PaymentHistory,
+      },
+      {
+        path: "pendingRiders",
+        Component: PendingRiders,
       },
     ],
   },
