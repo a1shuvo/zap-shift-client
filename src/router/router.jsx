@@ -6,6 +6,7 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import BeRider from "../pages/BeRider/BeRider";
 import Coverage from "../pages/Coverage/Coverage";
+import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: "pendingRiders",
         Component: PendingRiders,
+      },
+      {
+        path: "activeRiders",
+        Component: ActiveRiders,
       },
     ],
   },
