@@ -42,9 +42,26 @@ const ManageAdmins = () => {
     },
   });
 
-  const handleRoleChange = (id, currentRole) => {
+  const handleRoleChange = async (id, currentRole) => {
     const newRole = currentRole === "admin" ? "user" : "admin";
-    mutation.mutate({ id, role: newRole });
+
+    const result = await Swal.fire({
+      title: `Are you sure?`,
+      text: `Do you want to ${
+        newRole === "admin" ? "make" : "remove"
+      } admin access?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#22c55e",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, ${
+        newRole === "admin" ? "Make Admin" : "Remove Admin"
+      }`,
+    });
+
+    if (result.isConfirmed) {
+      mutation.mutate({ id, role: newRole });
+    }
   };
 
   return (

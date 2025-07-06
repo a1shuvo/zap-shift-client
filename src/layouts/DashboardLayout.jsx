@@ -8,9 +8,12 @@ import {
   LuUserCog,
 } from "react-icons/lu";
 import { NavLink, Outlet } from "react-router";
+import useUserRole from "../hooks/useUserRole";
 import ProFastLogo from "../pages/shared/ProFastLogo/ProFastLogo";
 
 const DashboardLayout = () => {
+  const { role, roleLoading } = useUserRole();
+
   return (
     <div className="drawer lg:drawer-open">
       {/* Drawer toggle checkbox */}
@@ -92,24 +95,32 @@ const DashboardLayout = () => {
               Update Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/activeRiders">
-              <LuBike className="inline mr-2" />
-              Active Riders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/pendingRiders">
-              <LuClock className="inline mr-2" />
-              Pending Riders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/manageAdmins">
-              <HiOutlineShieldCheck className="inline mr-2" />
-              Manage Admins
-            </NavLink>
-          </li>
+
+          {/* Riders Links */}
+
+          {!roleLoading && role === "admin" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/activeRiders">
+                  <LuBike className="inline mr-2" />
+                  Active Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/pendingRiders">
+                  <LuClock className="inline mr-2" />
+                  Pending Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manageAdmins">
+                  <HiOutlineShieldCheck className="inline mr-2" />
+                  Manage Admins
+                </NavLink>
+              </li>
+            </>
+          )}
+
           {/* ✕ Close button (only on small devices) */}
           <label
             htmlFor="dashboard-drawer"
