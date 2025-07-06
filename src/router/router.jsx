@@ -12,9 +12,11 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
+import Forbidden from "../pages/Forbidden/Forbidden";
 import Home from "../pages/Home/Home/Home";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import Loader from "../pages/shared/Loader/Loader";
+import AdminRoute from "../routes/AdminRoute";
 import PrivateRoute from "../routes/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -50,6 +52,10 @@ export const router = createBrowserRouter([
         ),
         loader: () => fetch("./warehouses.json"),
         HydrateFallback: Loader,
+      },
+      {
+        path: "forbidden",
+        Component: Forbidden,
       },
     ],
   },
@@ -89,15 +95,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "pendingRiders",
-        Component: PendingRiders,
+        element: (
+          <AdminRoute>
+            <PendingRiders></PendingRiders>
+          </AdminRoute>
+        ),
       },
       {
         path: "activeRiders",
-        Component: ActiveRiders,
+        element: (
+          <AdminRoute>
+            <ActiveRiders></ActiveRiders>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageAdmins",
-        Component: ManageAdmins,
+        element: (
+          <AdminRoute>
+            <ManageAdmins></ManageAdmins>
+          </AdminRoute>
+        ),
       },
     ],
   },
