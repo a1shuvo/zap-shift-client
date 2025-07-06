@@ -22,6 +22,8 @@ const Login = () => {
       const result = await signIn(data.email, data.password);
       const userInfo = {
         email: result?.user?.email,
+        role: "user", // Default role
+        created_at: new Date().toISOString(),
         last_log_in: new Date().toISOString(),
       };
       const res = await axiosInstance.post("/users", userInfo);

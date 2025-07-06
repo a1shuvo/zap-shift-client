@@ -22,3 +22,7 @@ body {
   font-family: "Urbanist", sans-serif;
   background-color: #eaeced;
 }
+
+a.active {
+  @apply bg-primary;
+}

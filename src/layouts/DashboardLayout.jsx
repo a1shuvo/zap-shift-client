@@ -1,4 +1,4 @@
-import { HiOutlineHome } from "react-icons/hi2";
+import { HiOutlineHome, HiOutlineShieldCheck } from "react-icons/hi2";
 import {
   LuBike,
   LuClock,
@@ -102,6 +102,12 @@ const DashboardLayout = () => {
             <NavLink to="/dashboard/pendingRiders">
               <LuClock className="inline mr-2" />
               Pending Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/manageAdmins">
+              <HiOutlineShieldCheck className="inline mr-2" />
+              Manage Admins
             </NavLink>
           </li>
           {/* ✕ Close button (only on small devices) */}
