@@ -6,6 +6,7 @@ import {
   LuMapPin,
   LuPackage,
   LuUserCog,
+  LuUserPlus,
 } from "react-icons/lu";
 import { NavLink, Outlet } from "react-router";
 import useUserRole from "../hooks/useUserRole";
@@ -100,6 +101,12 @@ const DashboardLayout = () => {
 
           {!roleLoading && role === "admin" && (
             <>
+              <li>
+                <NavLink to="/dashboard/assignRider">
+                  <LuUserPlus className="inline mr-2" />
+                  Assign Rider
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/activeRiders">
                   <LuBike className="inline mr-2" />
